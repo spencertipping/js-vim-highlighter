@@ -33,9 +33,7 @@ endif
 syn case match
 
 syn keyword javaScriptCommentTodo       TODO FIXME XXX TBD contained
-syn match   javaScriptLineComment       "\/\/.*" contains=@Spell,javaScriptCommentTodo
 syn match   javaScriptCommentSkip       "^[ \t]*\*\($\|[ \t]\+\)"
-syn region  javaScriptComment	        start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
 syn match   javaScriptSpecial	        "\\\d\d\d\|\\."
 syn region  javaScriptStringD	        start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=javaScriptSpecial,@htmlPreproc,javaScriptDivergenceEscape
 syn region  javaScriptStringS	        start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=javaScriptSpecial,@htmlPreproc,javaScriptDivergenceEscape
@@ -77,6 +75,8 @@ syn match   javaScriptEquals            /\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=/
 syn match   javaScriptKey               /\w\+:/                contains=javaScriptOperator
 syn match   javaScriptOperator          /[-+*\/%^|&!~<>:?;,$]/ contains=javaScriptDivergence
 syn region  javaScriptRegexpString      start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
+syn region  javaScriptComment	        start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
+syn match   javaScriptLineComment       "\/\/.*" contains=@Spell,javaScriptCommentTodo
 
 syn match   javaScriptBinding           /function\s*([^)]\+)/ contains=javaScriptFunction,javaScriptParens
 syn match   javaScriptBinding           /catch\s*([^)]\+)/    contains=javaScriptException,javaScriptParens
