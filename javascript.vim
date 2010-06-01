@@ -78,10 +78,10 @@ syn region  javaScriptRegexpString      start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ en
 syn region  javaScriptComment	        start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
 syn match   javaScriptLineComment       "\/\/.*" contains=@Spell,javaScriptCommentTodo
 
-syn match   javaScriptBinding           /function\s*([^()]\+)/ contains=javaScriptFunction,javaScriptParens
-syn match   javaScriptBinding           /catch\s*([^()]\+)/    contains=javaScriptException,javaScriptParens
-syn match   javaScriptBinding           /\w\+\s*>$>/           contains=javaScriptDivergence
-syn match   javaScriptBinding           /([^()]*)\s*>$>/       contains=javaScriptDivergence,javaScriptParens,javaScriptOperator
+syn match   javaScriptBinding           /function\s*([^()]*)/ contains=javaScriptFunction,javaScriptParens
+syn match   javaScriptBinding           /catch\s*([^()]\+)/   contains=javaScriptException,javaScriptParens
+syn match   javaScriptBinding           /\w\+\s*>$>/          contains=javaScriptDivergence
+syn match   javaScriptBinding           /([^()]*)\s*>$>/      contains=javaScriptDivergence,javaScriptParens,javaScriptOperator
 
 syn sync fromstart
 syn sync maxlines=100
