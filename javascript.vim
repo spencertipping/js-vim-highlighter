@@ -65,7 +65,7 @@ syn keyword javaScriptDivergence        comment literal
 syn match   javaScriptDivergence        ">$>" contained
 syn match   javaScriptDivergence        "|$>"
 
-syn keyword javaScriptFunction          function
+syn keyword javaScriptFunction          function contained
 syn match   javaScriptBraces	        /[{}\[\]]/
 syn match   javaScriptParens            /[()]/
 
