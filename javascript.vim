@@ -124,7 +124,7 @@ if version >= 508 || !exists("did_javascript_syn_inits")
 
   HiLink javaScriptPrototype            Special
 
-  HiLink javaScriptDefinition           Type
+  HiLink javaScriptDefinition           Keyword
 
   HiLink javaScriptLvalue               Special
   HiLink javaScriptDivergence           Operator
