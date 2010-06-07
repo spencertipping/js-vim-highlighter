@@ -32,6 +32,9 @@ endif
 
 syn case match
 
+syn match   javaScriptAssignment        /\<\w\+\s*[^=]\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=[^=]/ contains=javaScriptEquals
+syn match   javaScriptEquals            /[^=]\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=[^=]/
+
 syn keyword javaScriptCommentTodo       TODO FIXME XXX TBD contained
 syn match   javaScriptCommentSkip       "^[ \t]*\*\($\|[ \t]\+\)"
 syn match   javaScriptSpecial	        "\\\d\d\d\|\\."
@@ -68,9 +71,6 @@ syn match   javaScriptDivergence        "|$>"
 syn keyword javaScriptFunction          function contained
 syn match   javaScriptBraces	        /[{}\[\]]/
 syn match   javaScriptParens            /[()]/
-
-syn match   javaScriptAssignment        /\<\w\+\s*\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=/ contains=javaScriptEquals
-syn match   javaScriptEquals            /\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=/
 
 syn match   javaScriptKey               /\w\+:/                contains=javaScriptOperator
 syn match   javaScriptOperator          /[-+*\/%^|&!~<>:?;,$]/ contains=javaScriptDivergence
