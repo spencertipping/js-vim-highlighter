@@ -72,7 +72,7 @@ syn keyword javaScriptFunction          function contained
 syn match   javaScriptBraces	        /[{}\[\]]/
 syn match   javaScriptParens            /[()]/
 
-syn match   javaScriptKey               /\w\+:/                contains=javaScriptOperator
+syn match   javaScriptKey               /\w\+\s*:/             contains=javaScriptOperator
 syn match   javaScriptOperator          /[-+*\/%^|&!~<>:?;,$]/ contains=javaScriptDivergence
 syn region  javaScriptRegexpString      start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
 syn region  javaScriptComment	        start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
