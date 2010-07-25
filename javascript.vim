@@ -64,6 +64,9 @@ syn keyword javaScriptLabel		case default
 syn keyword javaScriptException		try catch finally throw
 syn keyword javaScriptPrototype         prototype constructor
 
+" Only works on some browsers:
+syn keyword javaScriptSometimes         const
+
 syn keyword javaScriptDivergence        comment literal
 syn match   javaScriptDivergence        ">$>" contained
 syn match   javaScriptDivergence        "|$>"
@@ -130,6 +133,8 @@ if version >= 508 || !exists("did_javascript_syn_inits")
   HiLink javaScriptDivergence           Operator
   HiLink javaScriptDivergenceEscape     Normal
   HiLink javaScriptDivergenceEscapeD    Special
+
+  HiLink javaScriptSometimes            Special
 
   HiLink javaScriptAssignment           Type
   HiLink javaScriptEquals               Operator
