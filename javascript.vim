@@ -14,53 +14,60 @@ endif
 
 syn case match
 
-syn region  jsParenGroup                matchgroup=jsParen   start=/(/  end=/)/  contains=TOP
-syn region  jsBracketGroup              matchgroup=jsBracket start=/\[/ end=/\]/ contains=TOP
-syn region  jsBraceGroup                matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
+syn region    jsParenGroup              matchgroup=jsParen   start=/(/  end=/)/  contains=TOP
+syn region    jsBracketGroup            matchgroup=jsBracket start=/\[/ end=/\]/ contains=TOP
+syn region    jsBraceGroup              matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
 
-syn match   jsColonLHS                  /\w\+\s*:/
-syn match   jsAssignment                /\w\+\s*=[^=]/ contains=jsOperator
+syn match     jsColonLHS                /\w\+\s*:/
+syn match     jsAssignment              /\w\+\s*=[^=]/ contains=jsOperator
 
-syn match   jsNumber                    /-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0x[0-9A-Fa-f]\+\|-\?0[0-7]\+/
-syn region  jsStringD                   matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=jsStringEscape,jsCaterwaulEscape
-syn region  jsStringS                   matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=jsStringEscape,jsCaterwaulEscape
-syn region  jsRegexp                    matchgroup=jsQuote start=+/+ skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
+syn match     jsNumber                  /-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0x[0-9A-Fa-f]\+\|-\?0[0-7]\+/
+syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=jsStringEscape,jsCaterwaulEscape
+syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=jsStringEscape,jsCaterwaulEscape
+syn region    jsRegexp                  matchgroup=jsQuote start=+/+ skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
   
-  syn match jsStringEscape              /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
-  syn match jsCaterwaulEscape           /#{[^}]\+}/ contains=TOP
+  syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
+  syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
 
-syn region  jsBlockComment              start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
-syn region  jsLineComment               start=+//+  end=+$+   contains=@Spell,jsCommentTags
+syn region    jsBlockComment            start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
+syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,jsCommentTags
 
   syn keyword jsCommentTags             TODO FIXME XXX TBD contained
 
-syn region  jsVarBinding                matchgroup=jsVarBindingConstruct start=/var\s\|const\s/ end=/;/ contains=TOP
-syn match   jsVarInBinding              /var\s\+\w\+\s\+in/ contains=jsVarBindingKeyword,jsOperator
-syn region  jsParamBinding              matchgroup=jsBindingConstruct start=/\(function\|catch\)\s*(/ end=/)/ contains=jsOperator
+syn region    jsVarBinding              matchgroup=jsVarBindingConstruct start=/var\s\|const\s/ end=/;/ contains=TOP
+syn match     jsVarInBinding            /var\s\+\w\+\s\+in/ contains=jsVarBindingKeyword,jsOperator
+syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(function\|catch\)\s*(/ end=/)/ contains=jsOperator
 
   syn keyword jsVarBindingKeyword       const var contained
   syn keyword jsBindingKeyword          function catch contained
-  syn match jsBindingAssignment         /\w\+\s*=[^=]/ contains=jsOperator contained containedin=jsVarBinding
+  syn match   jsBindingAssignment       /\w\+\s*=[^=]/ contains=jsOperator contained containedin=jsVarBinding
+  syn match   jsExtraBindingAssignment  /\w\+\s*=[^=]/ contains=jsOperator contained
 
-syn region  jsTernary                   matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
-syn match   jsOperator                  /[-+*^%&\|!~;=><,.]\{1,4\}/
+syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
+syn match     jsOperator                /[-+*^%&\|!~;=><,.]\{1,4\}/
 
-syn keyword jsReservedToplevel          if else switch while for do break continue return with case default try catch finally throw delete void
-syn keyword jsOperator                  in instanceof typeof new
-syn keyword jsBuiltinType               Array Boolean Date Function Number Object String RegExp
-syn keyword jsBuiltinLiteral            true false null undefined
+syn keyword   jsReservedToplevel        if else switch while for do break continue return with case default try catch finally throw delete void
+syn keyword   jsOperator                in instanceof typeof new
+syn keyword   jsBuiltinType             Array Boolean Date Function Number Object String RegExp
+syn keyword   jsBuiltinLiteral          true false null undefined
 
-syn keyword jsBuiltinValue              this arguments
-syn keyword jsPrototype                 prototype constructor
+syn keyword   jsBuiltinValue            this arguments
+syn keyword   jsPrototype               prototype constructor
 
-syn region  jsCaterwaulQs               matchgroup=jsCaterwaulMacro start=/qs\s*\[/     end=/]/ contains=TOP
-syn region  jsCaterwaulFn               matchgroup=jsCaterwaulMacro start=/fn\s*\[/     end=/]/ contains=jsOperator
-syn region  jsCaterwaulLet              matchgroup=jsCaterwaulMacro start=/let\s*\[/    end=/]/ contains=jsOperator
-syn region  jsCaterwaulWhere            matchgroup=jsCaterwaulMacro start=/where\s*\[/  end=/]/ contains=jsOperator
+syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/     end=/]/ contains=TOP
+syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/fn\s*\[/     end=/]/ contains=jsOperator
+syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/let\s*\[/    end=/]/ contains=jsOperator,jsExtraBindingAssignment
+syn region    jsCaterwaulWhere          matchgroup=jsCaterwaulMacro start=/where\s*\[/  end=/]/ contains=jsOperator,jsExtraBindingAssignment
 
-syn region  jsCaterwaulFn_              matchgroup=jsCaterwaulMacro start=/fn_\s*\[/    end=/]/ contains=TOP
-syn region  jsCaterwaulWhen             matchgroup=jsCaterwaulMacro start=/when\s*\[/   end=/]/ contains=TOP
-syn region  jsCaterwaulUnless           matchgroup=jsCaterwaulMacro start=/unless\s*\[/ end=/]/ contains=TOP
+syn region    jsCaterwaulFn_            matchgroup=jsCaterwaulMacro start=/fn_\s*\[/    end=/]/ contains=TOP
+syn region    jsCaterwaulWhen           matchgroup=jsCaterwaulMacro start=/when\s*\[/   end=/]/ contains=TOP
+syn region    jsCaterwaulUnless         matchgroup=jsCaterwaulMacro start=/unless\s*\[/ end=/]/ contains=TOP
+
+syn match     jsCaterwaulDfnParens      /([A-Za-z0-9$_, ]*)\s*>\$>/ contains=jsOperator,jsCaterwaulDfnSigil,jsParens
+syn match     jsCaterwaulDfn            /\w\+\s*>\$>/               contains=jsOperator,jsCaterwaulDfnSigil
+syn match     jsCaterwaulDfnSigil       />\$>/                      contained
+
+syn match     jsParens                  /[()]/ contained
 
 syn sync fromstart
 syn sync maxlines=100
@@ -69,11 +76,13 @@ if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
 
+hi def link jsCaterwaulDfnParens        Identifier
+hi def link jsCaterwaulDfn              Identifier
+hi def link jsCaterwaulDfnSigil         Keyword
+
 hi def link jsCaterwaulQs               Special
 hi def link jsCaterwaulMacro            Special
 hi def link jsCaterwaulFn               Identifier
-hi def link jsCaterwaulLet              Identifier
-hi def link jsCaterwaulWhere            Identifier
 
 hi def link jsLineComment               Comment
 hi def link jsBlockComment              Comment
@@ -91,6 +100,7 @@ hi def link jsColonLHS                  Type
 hi def link jsAssignment                Type
 
 hi def link jsParen                     Special
+hi def link jsParens                    Special
 hi def link jsBracket                   Special
 hi def link jsBrace                     Special
 hi def link jsParenCloseError           Error
@@ -106,6 +116,7 @@ hi def link jsVarBindingConstruct       Keyword
 hi def link jsBindingConstruct          Special
 hi def link jsBindingKeyword            Keyword
 hi def link jsBindingAssignment         Type
+hi def link jsExtraBindingAssignment    Identifier
 hi def link jsParamBinding              Identifier
 
 hi def link jsReservedToplevel          Keyword
