@@ -1,20 +1,7 @@
 " Vim syntax file
-" Language:	JavaScript
-" Maintainer:	Claudio Fleiner <claudio@fleiner.com>
-" Updaters:	Scott Shattuck (ss) <ss@technicalpursuit.com>
-"               Spencer Tipping (st) <spencer@spencertipping.com>
-" URL:		http://www.fleiner.com/vim/syntax/javascript.vim
-" Changes:	(ss) added keywords, reserved words, and other identifiers
-"		(ss) repaired several quoting and grouping glitches
-"		(ss) fixed regex parsing issue with multiple qualifiers [gi]
-"		(ss) additional factoring of keywords, globals, and members
-"               (st) Added Divergence constructs, removed globals, added variable bindings, assignment highlighting, and operator highlighting
-" Last Change:	2010 May 31
-
-" For version 5.x: Clear all syntax items
-" For version 6.x: Quit when a syntax file was already loaded
-" tuning parameters:
-" unlet javaScript_fold
+" Language:	JavaScript with Caterwaul extensions
+" Maintainer:	Spencer Tipping <spencer@spencertipping.com>
+" URL:		http://www.spencertipping.com/js-vim-highlighter/javascript.vim
 
 if !exists("main_syntax")
   if version < 600
@@ -25,66 +12,55 @@ if !exists("main_syntax")
   let main_syntax = 'javascript'
 endif
 
-" Drop fold if it set but vim doesn't support it.
-if version < 600 && exists("javaScript_fold")
-  unlet javaScript_fold
-endif
-
 syn case match
 
-syn match   javaScriptAssignment        /\<\w\+\s*[^=]\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=[^=]/ contains=javaScriptEquals
-syn match   javaScriptEquals            /[^=]\([-+*\/%^&|]\|<<\|>>\|>>>\)\?=[^=]/
+syn region  jsParenGroup                matchgroup=jsParen   start=/(/  end=/)/  contains=TOP
+syn region  jsBracketGroup              matchgroup=jsBracket start=/\[/ end=/\]/ contains=TOP
+syn region  jsBraceGroup                matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
 
-syn keyword javaScriptCommentTodo       TODO FIXME XXX TBD contained
-syn match   javaScriptCommentSkip       "^[ \t]*\*\($\|[ \t]\+\)"
-syn match   javaScriptSpecial	        "\\\d\d\d\|\\."
-syn region  javaScriptStringD	        start=+"+  skip=+\\\\\|\\"+  end=+"\|$+  contains=javaScriptSpecial,@htmlPreproc,javaScriptDivergenceEscape
-syn region  javaScriptStringS	        start=+'+  skip=+\\\\\|\\'+  end=+'\|$+  contains=javaScriptSpecial,@htmlPreproc,javaScriptDivergenceEscape
+syn match   jsColonLHS                  /\w\+\s*:/
+syn match   jsAssignment                /\w\+\s*=[^=]/ contains=jsOperator
 
-syn match   javaScriptDivergenceEscape  /#{[^}]\+}/ contains=ALL
-syn match   javaScriptDivergenceEscapeD /#{\|}/
+syn match   jsNumber                    /-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0x[0-9A-Fa-f]\+\|-\?0[0-7]\+/
+syn region  jsStringD                   matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=jsStringEscape,jsCaterwaulEscape
+syn region  jsStringS                   matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=jsStringEscape,jsCaterwaulEscape
+syn region  jsRegexp                    matchgroup=jsQuote start=+/+ skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
+  
+  syn match jsStringEscape              /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
+  syn match jsCaterwaulEscape           /#{[^}]\+}/ contains=TOP
 
-syn match   javaScriptLvalue            "++"
-syn match   javaScriptLvalue            "--"
+syn region  jsBlockComment              start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
+syn region  jsLineComment               start=+//+  end=+$+   contains=@Spell,jsCommentTags
 
-syn match   javaScriptSpecialCharacter  "'\\.'"
-syn match   javaScriptNumber	        "-\=\<\d\+L\=\>\|0[xX][0-9a-fA-F]\+\>"
+  syn keyword jsCommentTags             TODO FIXME XXX TBD contained
 
-syn keyword javaScriptConditional	if else switch
-syn keyword javaScriptRepeat		while for do in
-syn keyword javaScriptBranch		break continue
-syn keyword javaScriptOperator		new delete instanceof typeof
-syn keyword javaScriptType		Array Boolean Date Function Number Object String RegExp
-syn keyword javaScriptDefinition        var
-syn keyword javaScriptStatement		return with
-syn keyword javaScriptBoolean		true false
-syn keyword javaScriptNull		null undefined
-syn keyword javaScriptIdentifier	arguments this
-syn keyword javaScriptLabel		case default
-syn keyword javaScriptException		try catch finally throw
-syn keyword javaScriptPrototype         prototype constructor
+syn region  jsVarBinding                matchgroup=jsVarBindingConstruct start=/var\s\|const\s/ end=/;/ contains=TOP
+syn match   jsVarInBinding              /var\s\+\w\+\s\+in/ contains=jsVarBindingKeyword,jsOperator
+syn region  jsParamBinding              matchgroup=jsBindingConstruct start=/\(function\|catch\)\s*(/ end=/)/ contains=jsOperator
 
-" Only works on some browsers:
-syn keyword javaScriptSometimes         const
+  syn keyword jsVarBindingKeyword       const var contained
+  syn keyword jsBindingKeyword          function catch contained
+  syn match jsBindingAssignment         /\w\+\s*=[^=]/ contains=jsOperator contained containedin=jsVarBinding
 
-syn keyword javaScriptDivergence        comment literal
-syn match   javaScriptDivergence        ">$>" contained
-syn match   javaScriptDivergence        "|$>"
+syn region  jsTernary                   matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
+syn match   jsOperator                  /[-+*^%&\|!~;=><,.]\{1,4\}/
 
-syn keyword javaScriptFunction          function contained
-syn match   javaScriptBraces	        /[{}\[\]]/
-syn match   javaScriptParens            /[()]/
+syn keyword jsReservedToplevel          if else switch while for do break continue return with case default try catch finally throw delete void
+syn keyword jsOperator                  in instanceof typeof new
+syn keyword jsBuiltinType               Array Boolean Date Function Number Object String RegExp
+syn keyword jsBuiltinLiteral            true false null undefined
 
-syn match   javaScriptKey               /\w\+\s*:/             contains=javaScriptOperator
-syn match   javaScriptOperator          /[-+*\/%^|&!~<>:?;,$]/ contains=javaScriptDivergence
-syn region  javaScriptRegexpString      start=+/[^/*]+me=e-1 skip=+\\\\\|\\/+ end=+/[gi]\{0,2\}\s*$+ end=+/[gi]\{0,2\}\s*[<>;.,)\]}]+me=e-1 contains=@htmlPreproc oneline
-syn region  javaScriptComment	        start="/\*"  end="\*/" contains=@Spell,javaScriptCommentTodo
-syn match   javaScriptLineComment       "\/\/.*" contains=@Spell,javaScriptCommentTodo
+syn keyword jsBuiltinValue              this arguments
+syn keyword jsPrototype                 prototype constructor
 
-syn match   javaScriptBinding           /function\s*([^()]*)/ contains=javaScriptFunction,javaScriptParens
-syn match   javaScriptBinding           /catch\s*([^()]\+)/   contains=javaScriptException,javaScriptParens
-syn match   javaScriptBinding           /\w\+\s*>$>/          contains=javaScriptDivergence
-syn match   javaScriptBinding           /([^()]*)\s*>$>/      contains=javaScriptDivergence,javaScriptParens,javaScriptOperator
+syn region  jsCaterwaulQs               matchgroup=jsCaterwaulMacro start=/qs\s*\[/     end=/]/ contains=TOP
+syn region  jsCaterwaulFn               matchgroup=jsCaterwaulMacro start=/fn\s*\[/     end=/]/ contains=jsOperator
+syn region  jsCaterwaulLet              matchgroup=jsCaterwaulMacro start=/let\s*\[/    end=/]/ contains=jsOperator
+syn region  jsCaterwaulWhere            matchgroup=jsCaterwaulMacro start=/where\s*\[/  end=/]/ contains=jsOperator
+
+syn region  jsCaterwaulFn_              matchgroup=jsCaterwaulMacro start=/fn_\s*\[/    end=/]/ contains=TOP
+syn region  jsCaterwaulWhen             matchgroup=jsCaterwaulMacro start=/when\s*\[/   end=/]/ contains=TOP
+syn region  jsCaterwaulUnless           matchgroup=jsCaterwaulMacro start=/unless\s*\[/ end=/]/ contains=TOP
 
 syn sync fromstart
 syn sync maxlines=100
@@ -93,68 +69,51 @@ if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
 
-" Define the default highlighting.
-" For version 5.7 and earlier: only when not done already
-" For version 5.8 and later: only when an item doesn't have highlighting yet
-if version >= 508 || !exists("did_javascript_syn_inits")
-  if version < 508
-    let did_javascript_syn_inits = 1
-    command -nargs=+ HiLink hi link <args>
-  else
-    command -nargs=+ HiLink hi def link <args>
-  endif
-  HiLink javaScriptComment		Comment
-  HiLink javaScriptLineComment		Comment
-  HiLink javaScriptCommentTodo		Todo
-  HiLink javaScriptSpecial		Special
-  HiLink javaScriptStringS		String
-  HiLink javaScriptStringD		String
-  HiLink javaScriptCharacter		Character
-  HiLink javaScriptSpecialCharacter	javaScriptSpecial
-  HiLink javaScriptNumber		Number
-  HiLink javaScriptConditional		Conditional
-  HiLink javaScriptRepeat		Repeat
-  HiLink javaScriptBranch		Conditional
-  HiLink javaScriptOperator		Operator
-  HiLink javaScriptType			Type
-  HiLink javaScriptStatement		Statement
-  HiLink javaScriptFunction		Keyword
-  HiLink javaScriptError		Error
-  HiLink javaScrParenError		javaScriptError
-  HiLink javaScriptNull			Number
-  HiLink javaScriptBoolean		Number
-  HiLink javaScriptRegexpString		String
+hi def link jsCaterwaulQs               Special
+hi def link jsCaterwaulMacro            Special
+hi def link jsCaterwaulFn               Identifier
+hi def link jsCaterwaulLet              Identifier
+hi def link jsCaterwaulWhere            Identifier
 
-  HiLink javaScriptPrototype            Special
+hi def link jsLineComment               Comment
+hi def link jsBlockComment              Comment
+hi def link jsCommentTags               Todo
 
-  HiLink javaScriptDefinition           Keyword
+hi def link jsQuote                     Special
+hi def link jsNumber                    Number
+hi def link jsStringS                   String
+hi def link jsStringD                   String
+hi def link jsRegexp                    String
+hi def link jsStringEscape              Special
+hi def link jsCaterwaulEscape           Special
+hi def link jsColonLHS                  Type
 
-  HiLink javaScriptLvalue               Special
-  HiLink javaScriptDivergence           Operator
-  HiLink javaScriptDivergenceEscape     Normal
-  HiLink javaScriptDivergenceEscapeD    Special
+hi def link jsAssignment                Type
 
-  HiLink javaScriptSometimes            Special
+hi def link jsParen                     Special
+hi def link jsBracket                   Special
+hi def link jsBrace                     Special
+hi def link jsParenCloseError           Error
+hi def link jsBracketCloseError         Error
+hi def link jsBraceCloseError           Error
 
-  HiLink javaScriptAssignment           Type
-  HiLink javaScriptEquals               Operator
+hi def link jsTernaryOperator           Special
 
-  HiLink javaScriptBinding              Identifier
+hi def link jsVarInBinding              Type
 
-  HiLink javaScriptKey                  Type
-  HiLink javaScriptOperator             Operator
-  HiLink javaScriptParens               Special
-  HiLink javaScriptBraces               Special
+hi def link jsVarBindingKeyword         Keyword
+hi def link jsVarBindingConstruct       Keyword
+hi def link jsBindingConstruct          Special
+hi def link jsBindingKeyword            Keyword
+hi def link jsBindingAssignment         Type
+hi def link jsParamBinding              Identifier
 
-  HiLink javaScriptIdentifier		Special
-  HiLink javaScriptLabel		Label
-  HiLink javaScriptException		Exception
-  HiLink javaScriptMessage		Keyword
-  HiLink javaScriptDebug		Debug
-  HiLink javaScriptConstant		Label
-
-  delcommand HiLink
-endif
+hi def link jsReservedToplevel          Keyword
+hi def link jsOperator                  Keyword
+hi def link jsBuiltinType               Type
+hi def link jsBuiltinLiteral            Special
+hi def link jsBuiltinValue              Special
+hi def link jsPrototype                 Special
 
 let b:current_syntax = "javascript"
 if main_syntax == 'javascript'
