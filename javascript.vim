@@ -24,7 +24,7 @@ syn match     jsAssignment              /\w\+\s*=[^=]/ contains=jsOperator
 syn match     jsNumber                  /-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0x[0-9A-Fa-f]\+\|-\?0[0-7]\+/
 syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=jsStringEscape,jsCaterwaulEscape
-syn region    jsRegexp                  matchgroup=jsQuote start=+/[^\s]+me=e-1 skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
+syn region    jsRegexp                  matchgroup=jsQuote start=+/[^ ]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
   
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
   syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
