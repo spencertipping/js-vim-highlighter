@@ -18,9 +18,9 @@ syn region    jsParenGroup              matchgroup=jsParen   start=/(/  end=/)/ 
 syn region    jsBracketGroup            matchgroup=jsBracket start=/\[/ end=/\]/ contains=TOP
 syn region    jsBraceGroup              matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
 
-syn match     jsColonLHS                /\w\+\s*:/
-syn match     jsAssignment              /\w\+\s*=[^=]/ contains=jsOperator
+syn match     jsAssignment              /\w\+\s*[-+*/^&|%<>]*=[^=]/ contains=jsOperator
 
+syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
 syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=jsStringEscape,jsCaterwaulEscape
@@ -34,6 +34,7 @@ syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,js
 
   syn keyword jsCommentTags             TODO FIXME XXX TBD contained
 
+syn match     jsColonLHS                /\w\+\s*:/
 syn region    jsVarBinding              matchgroup=jsVarBindingConstruct start=/var\s\|const\s/ end=/;/ contains=TOP
 syn match     jsVarInBinding            /var\s\+\w\+\s\+in/ contains=jsVarBindingKeyword,jsOperator
 syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(function\|catch\)\s*(/ end=/)/ contains=jsOperator
