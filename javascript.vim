@@ -74,6 +74,7 @@ syn match     jsCaterwaulDfn            /\k\+\s*>\$>/               contains=jsO
 syn match     jsCaterwaulDfnSigil       />\$>/                      contained
 
 syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)\k\+\1/
+syn match     jsCaterwaulOperatorFn     /\$[-+*/^%&\|<>]\{1,2\}\$/
 
 syn match     jsParens                  /[()]/ contained
 
@@ -85,6 +86,7 @@ if main_syntax == "javascript"
 endif
 
 hi def link jsCaterwaulComplexOp        Special
+hi def link jsCaterwaulOperatorFn       Special
 
 hi def link jsCaterwaulDefmacro         Special
 hi def link jsCaterwaulWithGensyms      Identifier
