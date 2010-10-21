@@ -13,12 +13,13 @@ if !exists("main_syntax")
 endif
 
 syn case match
+setlocal iskeyword=48-57,95,36,A-Z,a-z
 
 syn region    jsParenGroup              matchgroup=jsParen   start=/(/  end=/)/  contains=TOP
 syn region    jsBracketGroup            matchgroup=jsBracket start=/\[/ end=/\]/ contains=TOP
 syn region    jsBraceGroup              matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
 
-syn match     jsAssignment              /\w\+\s*[-+*/^&|%<>]*=[^=]/ contains=jsOperator
+syn match     jsAssignment              /\k\+\s*[-+*/^&|%<>]*=[^=]/ contains=jsOperator
 
 syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
@@ -34,15 +35,15 @@ syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,js
 
   syn keyword jsCommentTags             TODO FIXME XXX TBD contained
 
-syn match     jsColonLHS                /\w\+\s*:/
+syn match     jsColonLHS                /\k\+\s*:/
 syn region    jsVarBinding              matchgroup=jsVarBindingConstruct start=/var\s\|const\s/ end=/;/ contains=TOP
-syn match     jsVarInBinding            /var\s\+\w\+\s\+in/ contains=jsVarBindingKeyword,jsOperator
+syn match     jsVarInBinding            /var\s\+\k\+\s\+in/ contains=jsVarBindingKeyword,jsOperator
 syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(function\|catch\)\s*(/ end=/)/ contains=jsOperator
 
   syn keyword jsVarBindingKeyword       const var contained
   syn keyword jsBindingKeyword          function catch contained
-  syn match   jsBindingAssignment       /\w\+\s*=[^=]/ contains=jsOperator contained containedin=jsVarBinding
-  syn match   jsExtraBindingAssignment  /\w\+\s*=[^=]/ contains=jsOperator contained containedin=jsCaterwaulLet,jsCaterwaulWhere
+  syn match   jsBindingAssignment       /\k\+\s*=[^=]/ contains=jsOperator contained containedin=jsVarBinding
+  syn match   jsExtraBindingAssignment  /\k\+\s*=[^=]/ contains=jsOperator contained containedin=jsCaterwaulLet,jsCaterwaulWhere
 
 syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
 syn match     jsOperator                /[-+*^%&\|!~;=><,.]\{1,4\}/
@@ -69,8 +70,10 @@ syn region    jsCaterwaulDefmacro       matchgroup=jsCaterwaulMacro start=/defma
 syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_gensyms\s*\[/ end=/]/ contains=jsOperator
 
 syn match     jsCaterwaulDfnParens      /([A-Za-z0-9$_, ]*)\s*>\$>/ contains=jsOperator,jsCaterwaulDfnSigil,jsParens
-syn match     jsCaterwaulDfn            /\w\+\s*>\$>/               contains=jsOperator,jsCaterwaulDfnSigil
+syn match     jsCaterwaulDfn            /\k\+\s*>\$>/               contains=jsOperator,jsCaterwaulDfnSigil
 syn match     jsCaterwaulDfnSigil       />\$>/                      contained
+
+syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)\k\+\1/
 
 syn match     jsParens                  /[()]/ contained
 
@@ -80,6 +83,8 @@ syn sync maxlines=100
 if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
+
+hi def link jsCaterwaulComplexOp        Special
 
 hi def link jsCaterwaulDefmacro         Special
 hi def link jsCaterwaulWithGensyms      Identifier
