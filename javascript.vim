@@ -23,8 +23,8 @@ syn match     jsAssignment              /\k\+\s*[-+*/^&|%<>]*=[^=]/ contains=jsO
 
 syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
-syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ contains=jsStringEscape,jsCaterwaulEscape
-syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ contains=jsStringEscape,jsCaterwaulEscape
+syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ oneline contains=jsStringEscape,jsCaterwaulEscape
+syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ oneline contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsRegexp                  matchgroup=jsQuote start=+/[^ ]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
   
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
@@ -55,6 +55,7 @@ syn keyword   jsBuiltinLiteral          true false null undefined
 
 syn keyword   jsBuiltinValue            this arguments
 syn keyword   jsPrototype               prototype constructor
+syn keyword   jsCaterwaul               caterwaul
 
 syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/           end=/]/ contains=TOP
 syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/           end=/]/ contains=TOP
@@ -99,6 +100,8 @@ hi def link jsCaterwaulDfnSigil         Keyword
 hi def link jsCaterwaulQs               Special
 hi def link jsCaterwaulMacro            Special
 hi def link jsCaterwaulFn               Identifier
+
+hi def link jsCaterwaul                 Type
 
 hi def link jsLineComment               Comment
 hi def link jsBlockComment              Comment
