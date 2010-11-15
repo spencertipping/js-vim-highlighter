@@ -43,7 +43,7 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
   syn keyword jsVarBindingKeyword       const var contained
   syn keyword jsBindingKeyword          function catch contained
   syn match   jsBindingAssignment       /\k\+\s*=[^=]/ contains=jsOperator contained containedin=jsVarBinding
-  syn match   jsExtraBindingAssignment  /\k\+\s*=[^=]/ contains=jsOperator contained containedin=jsCaterwaulLet,jsCaterwaulWhere
+  syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_, ]*)\)*\s*=[^=]/ contains=jsOperator,jsParens contained containedin=jsCaterwaulLet,jsCaterwaulWhere
 
 syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
 syn match     jsOperator                /[-+*^%&\|!~;=><,.]\{1,4\}/
@@ -69,13 +69,16 @@ syn region    jsCaterwaulUnless         matchgroup=jsCaterwaulMacro start=/unles
 syn region    jsCaterwaulCompileEval    matchgroup=jsCaterwaulMacro start=/compile_eval\s*\[/ end=/]/ contains=TOP
 
 syn region    jsCaterwaulDefmacro       matchgroup=jsCaterwaulMacro start=/defmacro\s*\[/     end=/]/ contains=TOP
+syn region    jsCaterwaulDefsubst       matchgroup=jsCaterwaulMacro start=/defsubst\s*\[/     end=/]/ contains=TOP
 syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_gensyms\s*\[/ end=/]/ contains=jsOperator
+
+syn match     jsCaterwaulDefsubstVar    /_\k\+/ contained containedin=jsCaterwaulDefsubst
 
 syn match     jsCaterwaulDfnParens      /([A-Za-z0-9$_, ]*)\s*>\$>/ contains=jsOperator,jsCaterwaulDfnSigil,jsParens
 syn match     jsCaterwaulDfn            /\k\+\s*>\$>/               contains=jsOperator,jsCaterwaulDfnSigil
 syn match     jsCaterwaulDfnSigil       />\$>/                      contained
 
-syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)\k\+\1/
+syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[\k()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
 syn match     jsCaterwaulOperatorFn     /\$[-+*/^%&\|<>]\{1,2\}\$/
 
 syn match     jsParens                  /[()]/ contained
@@ -92,6 +95,7 @@ hi def link jsCaterwaulOperatorFn       Special
 
 hi def link jsCaterwaulDefmacro         Special
 hi def link jsCaterwaulWithGensyms      Identifier
+hi def link jsCaterwaulDefsubstVar      Identifier
 
 hi def link jsCaterwaulDfnParens        Identifier
 hi def link jsCaterwaulDfn              Identifier
