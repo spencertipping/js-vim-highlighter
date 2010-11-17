@@ -76,12 +76,9 @@ syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_
 
 syn match     jsCaterwaulDefsubstVar    /_\k\+/ contained containedin=jsCaterwaulDefsubst
 
-syn match     jsCaterwaulDfnParens      /([A-Za-z0-9$_, ]*)\s*>\$>/ contains=jsOperator,jsCaterwaulDfnSigil,jsParens
-syn match     jsCaterwaulDfn            /\k\+\s*>\$>/               contains=jsOperator,jsCaterwaulDfnSigil
-syn match     jsCaterwaulDfnSigil       />\$>/                      contained
-
-syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[\k()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
+syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[A-Za-z0-9$_()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
 syn match     jsCaterwaulOperatorFn     /\$[-+*/^%&\|<>]\{1,2\}\$/
+syn match     jsCaterwaulUnaryLeftOp    /[^ ]\+[<>!=]\{1,3\}/
 
 syn match     jsParens                  /[()]/ contained
 
@@ -94,16 +91,13 @@ endif
 
 hi def link jsCaterwaulContinuation     Special
 
+hi def link jsCaterwaulUnaryLeftOp      Special
 hi def link jsCaterwaulComplexOp        Special
 hi def link jsCaterwaulOperatorFn       Special
 
 hi def link jsCaterwaulDefmacro         Special
 hi def link jsCaterwaulWithGensyms      Identifier
 hi def link jsCaterwaulDefsubstVar      Identifier
-
-hi def link jsCaterwaulDfnParens        Identifier
-hi def link jsCaterwaulDfn              Identifier
-hi def link jsCaterwaulDfnSigil         Keyword
 
 hi def link jsCaterwaulQs               Special
 hi def link jsCaterwaulMacro            Special
