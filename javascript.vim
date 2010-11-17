@@ -57,6 +57,8 @@ syn keyword   jsBuiltinValue            this arguments
 syn keyword   jsPrototype               prototype constructor
 syn keyword   jsCaterwaul               caterwaul
 
+syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/\(cc\|tail\)\s*\[+ end=/]/ contains=TOP
+
 syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/           end=/]/ contains=TOP
 syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/           end=/]/ contains=TOP
 syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/f[nb]\s*\[/        end=/]/ contains=jsOperator
@@ -89,6 +91,8 @@ syn sync maxlines=100
 if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
+
+hi def link jsCaterwaulContinuation     Special
 
 hi def link jsCaterwaulComplexOp        Special
 hi def link jsCaterwaulOperatorFn       Special
