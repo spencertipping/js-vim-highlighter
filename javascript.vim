@@ -78,7 +78,7 @@ syn match     jsCaterwaulDefsubstVar    /_\k\+/ contained containedin=jsCaterwau
 
 syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[A-Za-z0-9$_()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
 syn match     jsCaterwaulOperatorFn     /\$[-+*/^%&\|<>]\{1,2\}\$/
-syn match     jsCaterwaulUnaryLeftOp    /[^ ]\+[<>=]\{2,3\}/
+syn match     jsCaterwaulUnaryLeftOp    /[^'"/ ]\+[<>=]\{2,3\}/
 
 syn match     jsParens                  /[()]/ contained
 
