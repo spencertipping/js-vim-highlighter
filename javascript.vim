@@ -61,26 +61,29 @@ syn keyword   jsCaterwaul               caterwaul
 syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/\(cc\|tail\)\s*\[+ end=/]/ contains=TOP
 
 syn match     jsCaterwaulMb             /\/mb\/\?/
-syn region    jsCaterwaulSe             matchgroup=jsCaterwaulMacro start=/\/[rs]e\[/         end=/]/ contains=TOP
+syn region    jsCaterwaulSe             matchgroup=jsCaterwaulMacro start=/\/[rs]e\[/           end=/]/ contains=TOP
 
-syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/           end=/]/ contains=TOP
-syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/           end=/]/ contains=TOP
-syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/f[nbc]\s*\[/       end=/]/ contains=jsOperator
-syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/let\*\?\s*\[/      end=/]/ contains=TOP,jsBindingAssignment
-syn region    jsCaterwaulLetCps         matchgroup=jsCaterwaulMacro start=/let\/cps\*\?\s*\[/ end=/]/ contains=TOP,jsCpsBindingAssignment
-syn region    jsCaterwaulWhere          matchgroup=jsCaterwaulMacro start=/where\*\?\s*\[/    end=/]/ contains=TOP,jsBindingAssignment
+syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/             end=/]/ contains=TOP
+syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/             end=/]/ contains=TOP
+syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/f[nbc]\s*\[/         end=/]/ contains=jsOperator
+syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/let\*\?\s*\[/        end=/]/ contains=TOP,jsBindingAssignment
+syn region    jsCaterwaulLetCps         matchgroup=jsCaterwaulMacro start=/let\/cps\*\?\s*\[/   end=/]/ contains=TOP,jsCpsBindingAssignment
+syn region    jsCaterwaulWhere          matchgroup=jsCaterwaulMacro start=/where\*\?\s*\[/      end=/]/ contains=TOP,jsBindingAssignment
 
-syn region    jsCaterwaulFn_            matchgroup=jsCaterwaulMacro start=/f[nbc]_\s*\[/      end=/]/ contains=TOP
-syn region    jsCaterwaulWhen           matchgroup=jsCaterwaulMacro start=/when\s*\[/         end=/]/ contains=TOP
-syn region    jsCaterwaulUnless         matchgroup=jsCaterwaulMacro start=/unless\s*\[/       end=/]/ contains=TOP
-syn region    jsCaterwaulCompileEval    matchgroup=jsCaterwaulMacro start=/compile_eval\s*\[/ end=/]/ contains=TOP
+syn region    jsCaterwaulFn_            matchgroup=jsCaterwaulMacro start=/f[nbc]_\s*\[/        end=/]/ contains=TOP
+syn region    jsCaterwaulWhen           matchgroup=jsCaterwaulMacro start=/when\s*\[/           end=/]/ contains=TOP
+syn region    jsCaterwaulUnless         matchgroup=jsCaterwaulMacro start=/unless\s*\[/         end=/]/ contains=TOP
+syn region    jsCaterwaulCompileEval    matchgroup=jsCaterwaulMacro start=/compile_eval\s*\[/   end=/]/ contains=TOP
 
-syn region    jsCaterwaulDefmacro       matchgroup=jsCaterwaulMacro start=/defmacro\s*\[/     end=/]/ contains=TOP
-syn region    jsCaterwaulDefsubst       matchgroup=jsCaterwaulMacro start=/defsubst\s*\[/     end=/]/ contains=TOP
-syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_gensyms\s*\[/ end=/]/ contains=jsOperator
+syn region    jsCaterwaulDefmacro       matchgroup=jsCaterwaulMacro start=/defmacro\s*\[/       end=/]/ contains=TOP
+syn region    jsCaterwaulDefsubst       matchgroup=jsCaterwaulMacro start=/defsubst\s*\[/       end=/]/ contains=TOP
+syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_gensyms\s*\[/   end=/]/ contains=jsOperator
 
-syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/          end=/]/ contains=TOP
-  syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/       end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
+syn region    jsCaterwaulUnwind         matchgroup=jsCaterwaulMacro start=/unwind\s*\[/         end=/]/ contains=TOP
+syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwind_protect\s*\[/ end=/]/ contains=TOP
+
+syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/            end=/]/ contains=TOP
+  syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/         end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
   syn match   jsCaterwaulSeqVariableOp  /\([\*/%|&]!\?\|<<\|>>\|>>>\)\~\?\k*/ contained contains=jsCaterwaulSeqVariable,jsOperator containedin=jsCaterwaulSeq
     syn match jsCaterwaulSeqVariable    /\k\+/ contained containedin=jsCaterwaulSeqVariableOp
 
