@@ -79,6 +79,11 @@ syn region    jsCaterwaulDefmacro       matchgroup=jsCaterwaulMacro start=/defma
 syn region    jsCaterwaulDefsubst       matchgroup=jsCaterwaulMacro start=/defsubst\s*\[/     end=/]/ contains=TOP
 syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_gensyms\s*\[/ end=/]/ contains=jsOperator
 
+syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/          end=/]/ contains=TOP
+  syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/       end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
+  syn match   jsCaterwaulSeqVariableOp  /\([\*/%|&]!\?\|<<\|>>\|>>>\)\~\?\k*/ contained contains=jsCaterwaulSeqVariable,jsOperator containedin=jsCaterwaulSeq
+    syn match jsCaterwaulSeqVariable    /\k\+/ contained containedin=jsCaterwaulSeqVariableOp
+
 syn match     jsCaterwaulDefsubstVar    /_\k\+/ contained containedin=jsCaterwaulDefsubst
 
 syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[A-Za-z0-9$_()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
@@ -93,6 +98,8 @@ syn sync maxlines=100
 if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
+
+hi def link jsCaterwaulSeqVariable      Identifier
 
 hi def link jsCaterwaulMb               Special
 
