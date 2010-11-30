@@ -93,7 +93,7 @@ syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\
 
   syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
   syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
-  syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption                        contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
+  syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption canvas audio video     contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
 
 syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/            end=/]/ contains=TOP
   syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/         end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
