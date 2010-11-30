@@ -83,18 +83,18 @@ syn region    jsCaterwaulUnwind         matchgroup=jsCaterwaulMacro start=/unwin
 syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwind_protect\s*\[/ end=/]/ contains=TOP
 
 syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/           end=/]/ contains=TOP
-  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlParens,jsCaterwaulHtmlElement
+  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlParens,jsCaterwaulHtmlElement,jsCaterwaulHtml
 
   syn match   jsCaterwaulHtmlClass      /\s*\./        contained nextgroup=jsCaterwaulHtmlClassName
   syn match   jsCaterwaulHtmlClassName  /\s*\w\+/      contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlSlash      /\s*\/\s*\w\+/ contained nextgroup=@jsCaterwaulHtmlOps
-  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/ end=/)/ contained containedin=jsCaterwaulHtml,jsCaterwaulHtmlParens contains=TOP
+  syn match   jsCaterwaulHtmlMap        /\s*%\s*\w\+/  contained nextgroup=@jsCaterwaulHtmlOps
+  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/ end=/)/ contains=TOP contained containedin=jsCaterwaulHtml,jsCaterwaulHtmlParens,@jsCaterwaulHtmlOps
 
-  syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=jsCaterwaulHtml nextgroup=@jsCaterwaulHtmlOps
-  syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=jsCaterwaulHtml nextgroup=@jsCaterwaulHtmlOps
-  syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption                        contained containedin=jsCaterwaulHtml nextgroup=@jsCaterwaulHtmlOps
+  syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
+  syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
+  syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption                        contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
 
-  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/ end=/)/ contains=jsCaterwaulHtmlElement contained containedin=jsCaterwaulHtml,jsCaterwaulHtmlParens,@jsCaterwaulHtmlOps
 
 syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/            end=/]/ contains=TOP
   syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/         end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
