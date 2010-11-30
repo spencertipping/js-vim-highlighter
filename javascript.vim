@@ -85,10 +85,10 @@ syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwin
 syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/           end=/]/ contains=TOP
   syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlParens,jsCaterwaulHtmlElement,jsCaterwaulHtml
 
-  syn match   jsCaterwaulHtmlClass      /\s*\./                    contained nextgroup=jsCaterwaulHtmlClassName
-  syn match   jsCaterwaulHtmlClassName  /\s*\w\+/                  contained nextgroup=@jsCaterwaulHtmlOps
-  syn match   jsCaterwaulHtmlSlash      /\s*\/\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
-  syn match   jsCaterwaulHtmlMap        /\s*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlClass      /[ \t\n]*\./                    contained nextgroup=jsCaterwaulHtmlClassName
+  syn match   jsCaterwaulHtmlClassName  /[ \t\n]*\w\+/                  contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlSlash      /[ \t\n]*\/\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlMap        /[ \t\n]*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
   syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/ end=/)/ nextgroup=@jsCaterwaulHtmlOps contains=TOP contained containedin=@jsCaterwaulHtmlOps
 
   syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
