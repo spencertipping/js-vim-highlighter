@@ -83,7 +83,7 @@ syn region    jsCaterwaulUnwind         matchgroup=jsCaterwaulMacro start=/unwin
 syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwind_protect\s*\[/ end=/]/ contains=TOP
 
 syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/           end=/]/ contains=TOP
-  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlParens,jsCaterwaulHtmlElement,jsCaterwaulHtml
+  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlParens,jsCaterwaulHtmlElement,jsCaterwaulHtml
 
   syn match   jsCaterwaulHtmlClass      /\s*\./        contained nextgroup=jsCaterwaulHtmlClassName
   syn match   jsCaterwaulHtmlClassName  /\s*\w\+/      contained nextgroup=@jsCaterwaulHtmlOps
@@ -120,6 +120,7 @@ hi def link jsCaterwaulHtmlElement      Keyword
 hi def link jsCaterwaulHtmlClass        Special
 hi def link jsCaterwaulHtmlClassName    Type
 hi def link jsCaterwaulHtmlSlash        Special
+hi def link jsCaterwaulHtmlMap          Special
 
 hi def link jsCaterwaulSeqVariable      Identifier
 
