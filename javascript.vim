@@ -83,13 +83,14 @@ syn region    jsCaterwaulUnwind         matchgroup=jsCaterwaulMacro start=/unwin
 syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwind_protect\s*\[/ end=/]/ contains=TOP
 
 syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/           end=/]/ contains=TOP
-  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlParens,jsCaterwaulHtmlElement,jsCaterwaulHtml
+  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlParens,jsCaterwaulHtmlArray,jsCaterwaulHtmlElement,jsCaterwaulHtml
 
   syn match   jsCaterwaulHtmlClass      /[ \t\n]*\./                    contained nextgroup=jsCaterwaulHtmlClassName
   syn match   jsCaterwaulHtmlClassName  /[ \t\n]*\w\+/                  contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlSlash      /[ \t\n]*\/\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlMap        /[ \t\n]*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
-  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/ end=/)/ nextgroup=@jsCaterwaulHtmlOps contains=TOP contained containedin=@jsCaterwaulHtmlOps
+  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/  end=/)/ nextgroup=@jsCaterwaulHtmlOps contains=TOP contained containedin=@jsCaterwaulHtmlOps
+  syn region  jsCaterwaulHtmlArray      matchgroup=jsParens start=/\[/ end=/]/ nextgroup=@jsCaterwaulHtmlOps contains=TOP contained containedin=@jsCaterwaulHtmlOps
 
   syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
   syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
