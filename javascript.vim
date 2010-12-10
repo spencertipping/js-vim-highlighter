@@ -61,7 +61,7 @@ syn keyword   jsCaterwaul               caterwaul
 syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/\(cc\|tail\)\s*\[+ end=/]/ contains=TOP
 
 syn match     jsCaterwaulMb             /\/mb\/\?/
-syn region    jsCaterwaulSe             matchgroup=jsCaterwaulMacro start=/\/[rs]e\[/           end=/]/ contains=TOP
+syn region    jsCaterwaulSe             matchgroup=jsCaterwaulMacro start=/\/\s*[rs]e\(\.\k\+\)\?\[/ end=/]/ contains=TOP
 
 syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/             end=/]/ contains=TOP
 syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/             end=/]/ contains=TOP
