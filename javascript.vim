@@ -29,6 +29,8 @@ syn region    jsRegexp                  matchgroup=jsQuote start=+/[^ ]+rs=e-1 s
   
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
   syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
+  syn match   jsCaterwaulNumericHex     /xl\?\(_\?[0-9a-f]\{2\}_\?\)\+/
+  syn match   jsCaterwaulNumericBinary  /bl\?\(_\?[01]\{2\}_\?\)\{4,\}/
 
 syn region    jsBlockComment            start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
 syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,jsCommentTags
@@ -115,6 +117,9 @@ syn sync maxlines=100
 if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
+
+hi def link jsCaterwaulNumericHex       Number
+hi def link jsCaterwaulNumericBinary    Number
 
 hi def link jsCaterwaulHtmlElement      Keyword
 hi def link jsCaterwaulHtmlClass        Special
