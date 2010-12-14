@@ -100,7 +100,7 @@ syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\
 
 syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/            end=/]/ contains=TOP
   syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/         end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
-  syn match   jsCaterwaulSeqVariableOp  /\([\*/%|&]!\?\|<<\|>>\|>>>\)\~\?\k*/ contained contains=jsCaterwaulSeqVariable,jsOperator containedin=jsCaterwaulSeq
+  syn match   jsCaterwaulSeqVariableOp  /\([-\*/%|&]!\?\|<<\|>>\|>>>\)\~\?\k*/ contained contains=jsCaterwaulSeqVariable,jsOperator containedin=jsCaterwaulSeq
     syn match jsCaterwaulSeqVariable    /\k\+/ contained containedin=jsCaterwaulSeqVariableOp
 
 syn match     jsCaterwaulDefsubstVar    /_\k\+/ contained containedin=jsCaterwaulDefsubst
@@ -110,6 +110,7 @@ syn match     jsCaterwaulOperatorFn     /\$[-+*/^%&\|<>]\{1,2\}\$/
 syn match     jsCaterwaulUnaryLeftOp    /[^'"/ ]\+[<>=]\{2,3\}/
 
 syn match     jsParens                  /[()]/ contained
+syn match     jsClosers                 /[\]})]/
 
 syn sync fromstart
 syn sync maxlines=100
@@ -117,6 +118,8 @@ syn sync maxlines=100
 if main_syntax == "javascript"
   syn sync ccomment javaScriptComment
 endif
+
+hi def link jsClosers                   Error
 
 hi def link jsCaterwaulNumericHex       Number
 hi def link jsCaterwaulNumericBinary    Number
