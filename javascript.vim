@@ -65,7 +65,7 @@ syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/
 syn match     jsCaterwaulMb             /\/mb\/\?/
 syn region    jsCaterwaulSe             matchgroup=jsCaterwaulMacro start=/\/\s*[rs]e\(\.\k\+\)\?\[/ end=/]/ contains=TOP
 
-syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qs\s*\[/             end=/]/ contains=TOP
+syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qse\?\s*\[/          end=/]/ contains=TOP
 syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/             end=/]/ contains=TOP
 syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/f[nbc]\s*\[/         end=/]/ contains=jsOperator
 syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/let\*\?\s*\[/        end=/]/ contains=TOP,jsBindingAssignment
