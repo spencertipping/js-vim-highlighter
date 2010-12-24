@@ -69,9 +69,10 @@ syn region    jsCaterwaulCps            matchgroup=jsCaterwaulMacro start=/\/\s*
 syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qse\?\s*\[/           end=/]/ contains=TOP
 syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/              end=/]/ contains=TOP
 syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/f[nbc]\s*\[/          end=/]/ contains=jsOperator
-syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/let\*\?\s*\[/         end=/]/ contains=TOP,jsBindingAssignment
-syn region    jsCaterwaulLetCps         matchgroup=jsCaterwaulMacro start=/let\/cp[sb]\*\?\s*\[/ end=/]/ contains=TOP,jsCpsBindingAssignment
 syn region    jsCaterwaulWhere          matchgroup=jsCaterwaulMacro start=/where\*\?\s*\[/       end=/]/ contains=TOP,jsBindingAssignment
+
+syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/l\(et\)\?\*\?\s*\[/         end=/]/ contains=TOP,jsBindingAssignment
+syn region    jsCaterwaulLetCps         matchgroup=jsCaterwaulMacro start=/l\(et\)\?\/cp[sb]\*\?\s*\[/ end=/]/ contains=TOP,jsCpsBindingAssignment
 
 syn region    jsCaterwaulFn_            matchgroup=jsCaterwaulMacro start=/f[nbc]_\s*\[/         end=/]/ contains=TOP
 syn region    jsCaterwaulWhen           matchgroup=jsCaterwaulMacro start=/when\s*\[/            end=/]/ contains=TOP
