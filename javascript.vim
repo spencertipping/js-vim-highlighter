@@ -60,6 +60,7 @@ syn keyword   jsBuiltinValue            this arguments
 syn keyword   jsPrototype               prototype constructor
 syn keyword   jsCaterwaul               caterwaul
 
+syn region    jsCaterwaulPEG            matchgroup=jsCaterwaulMacro start=+peg\[+ end=/]/ contains=TOP
 syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/\(cc\|tail\)\s*\[+ end=/]/ contains=TOP
 
 syn match     jsCaterwaulMb             /\/mb\/\?/
@@ -87,11 +88,13 @@ syn region    jsCaterwaulUnwind         matchgroup=jsCaterwaulMacro start=/unwin
 syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwind_protect\s*\[/  end=/]/ contains=TOP
 
 syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/            end=/]/ contains=TOP
-  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlParens,jsCaterwaulHtmlArray,jsCaterwaulHtmlElement,jsCaterwaulHtml
+  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlParens,jsCaterwaulHtmlArray
+  syn cluster jsCaterwaulHtmlOps             add=jsCaterwaulHtmlElement,jsCaterwaulHtml
 
   syn match   jsCaterwaulHtmlClass      /[ \t\n]*\./                    contained nextgroup=jsCaterwaulHtmlClassName
   syn match   jsCaterwaulHtmlClassName  /[ \t\n]*\w\+/                  contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlSlash      /[ \t\n]*\/\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlAttr       /[ \t\n]*\*\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlMap        /[ \t\n]*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
   syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/  end=/)/ nextgroup=@jsCaterwaulHtmlOps contains=TOP contained containedin=@jsCaterwaulHtmlOps
   syn region  jsCaterwaulHtmlArray      matchgroup=jsParens start=/\[/ end=/]/ nextgroup=@jsCaterwaulHtmlOps contains=TOP contained containedin=@jsCaterwaulHtmlOps
@@ -131,6 +134,7 @@ hi def link jsCaterwaulHtmlClass        Special
 hi def link jsCaterwaulHtmlClassName    Type
 hi def link jsCaterwaulHtmlSlash        Special
 hi def link jsCaterwaulHtmlMap          Special
+hi def link jsCaterwaulHtmlAttr         Special
 
 hi def link jsCaterwaulSeqVariable      Identifier
 
