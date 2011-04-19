@@ -25,8 +25,8 @@ syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
 syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ oneline contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ oneline contains=jsStringEscape,jsCaterwaulEscape
-syn region    jsRegexp                  matchgroup=jsQuote start=+/[^ ]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*\s*$+ end=+/[gims]*\s*[-+*/^%&|=<>;.,)\]}]+me=e-1 oneline contains=jsStringEscape
-  
+syn region    jsRegexp                  matchgroup=jsQuote start=+[=([{]\@<=\s*/[^ ]+ms=e-1,rs=e-1 start=+^\s*/+ skip=+\\\\\|\\/+ end=+/[gims]*+ oneline contains=jsStringEscape
+
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
   syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
   syn match   jsCaterwaulNumericHex     /xl\?\(_\?[0-9a-f]\{2\}_\?\)\+/
