@@ -25,17 +25,12 @@ syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
 syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ oneline contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ oneline contains=jsStringEscape,jsCaterwaulEscape
-syn region    jsRegexp                  matchgroup=jsQuote start=+[=([{]\@<=\s*/[^ ]+ms=e-1,rs=e-1 start=+^\s*/+ skip=+\\\\\|\\/+ end=+/[gims]*+ oneline contains=jsStringEscape
+syn region    jsRegexp                  matchgroup=jsQuote start=+[-=([{!+*%<>=]\@<=\s*/[^/ ]+ms=e-1,rs=e-1 start=+^\s*/[^\/]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*+ oneline contains=jsStringEscape
 
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
   syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
   syn match   jsCaterwaulNumericHex     /xl\?\(_\?[0-9a-f]\{2\}_\?\)\+/
   syn match   jsCaterwaulNumericBinary  /bl\?\(_\?[01]\{2\}_\?\)\{4,\}/
-
-syn region    jsBlockComment            start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
-syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,jsCommentTags
-
-  syn keyword jsCommentTags             TODO FIXME XXX TBD contained
 
 syn match     jsColonLHS                /\k\+\s*:/
 syn region    jsVarBinding              matchgroup=jsVarBindingConstruct start=/var\s\|const\s/ end=/;/ contains=TOP
@@ -45,7 +40,7 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
   syn keyword jsVarBindingKeyword       const var contained
   syn keyword jsBindingKeyword          function catch contained
   syn match   jsBindingAssignment       /\k\+\s*=\([^=]\|$\)/ contains=jsOperator contained containedin=jsVarBinding
-  syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_, ]*)\)*\s*=\([^=]\|$\)/ contains=jsOperator,jsParens contained containedin=jsCaterwaulLet,jsCaterwaulWhere
+  syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_, ]*)\)*\s*=\([^=]\|$\)/ contains=jsOperator,jsParens contained containedin=jsBindingGroup
   syn match   jsCpsBindingAssignment    /[A-Za-z0-9$_ ]\+\s*<-/                                  contains=jsOperator,jsParens contained containedin=jsCaterwaulLetCps
 
 syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
@@ -60,34 +55,16 @@ syn keyword   jsBuiltinValue            this arguments
 syn keyword   jsPrototype               prototype constructor
 syn keyword   jsCaterwaul               caterwaul
 
-syn region    jsCaterwaulPEG            matchgroup=jsCaterwaulMacro start=+peg\[+ end=/]/ contains=TOP
-syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/\(cc\|tail\)\s*\[+ end=/]/ contains=TOP
+syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGroup
+syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
+syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
+syn keyword   jsOtherMacro              se effect re returning then until over over_keys over_values
 
-syn match     jsCaterwaulMb             /\/mb\/\?/
-syn region    jsCaterwaulSe             matchgroup=jsCaterwaulMacro start=/\/\s*[rs]e\(\.\k\+\)\?\[/  end=/]/ contains=TOP
-syn region    jsCaterwaulCps            matchgroup=jsCaterwaulMacro start=/\/\s*cp[sb]\(\.\k\+\)\?\[/ end=/]/ contains=TOP
+syn region    jsBindingGroup            matchgroup=jsCaterwaulMacro start='\[' end=']' contained contains=TOP
+syn region    jsFunctionGroup           matchgroup=jsCaterwaulMacro start='\[' end=']' contained
+syn region    jsQuotationGroup          matchgroup=jsCaterwaulMacro start='\[' end=']' contained contains=TOP
 
-syn region    jsCaterwaulQs             matchgroup=jsCaterwaulMacro start=/qse\?\s*\[/           end=/]/ contains=TOP
-syn region    jsCaterwaulQg             matchgroup=jsCaterwaulMacro start=/qg\s*\[/              end=/]/ contains=TOP
-syn region    jsCaterwaulFn             matchgroup=jsCaterwaulMacro start=/f[nbc]\s*\[/          end=/]/ contains=jsOperator
-syn region    jsCaterwaulWhere          matchgroup=jsCaterwaulMacro start=/where\*\?\s*\[/       end=/]/ contains=TOP,jsBindingAssignment
-
-syn region    jsCaterwaulLet            matchgroup=jsCaterwaulMacro start=/l\(et\)\?\*\?\s*\[/         end=/]/ contains=TOP,jsBindingAssignment
-syn region    jsCaterwaulLetCps         matchgroup=jsCaterwaulMacro start=/l\(et\)\?\/cp[sb]\*\?\s*\[/ end=/]/ contains=TOP,jsCpsBindingAssignment
-
-syn region    jsCaterwaulFn_            matchgroup=jsCaterwaulMacro start=/f[nbc]_\s*\[/         end=/]/ contains=TOP
-syn region    jsCaterwaulWhen           matchgroup=jsCaterwaulMacro start=/when\s*\[/            end=/]/ contains=TOP
-syn region    jsCaterwaulUnless         matchgroup=jsCaterwaulMacro start=/unless\s*\[/          end=/]/ contains=TOP
-syn region    jsCaterwaulCompileEval    matchgroup=jsCaterwaulMacro start=/compile_eval\s*\[/    end=/]/ contains=TOP
-
-syn region    jsCaterwaulDefmacro       matchgroup=jsCaterwaulMacro start=/defmacro\s*\[/        end=/]/ contains=TOP
-syn region    jsCaterwaulDefsubst       matchgroup=jsCaterwaulMacro start=/defsubst\s*\[/        end=/]/ contains=TOP
-syn region    jsCaterwaulWithGensyms    matchgroup=jsCaterwaulMacro start=/with_gensyms\s*\[/    end=/]/ contains=jsOperator
-
-syn region    jsCaterwaulUnwind         matchgroup=jsCaterwaulMacro start=/unwind\s*\[/          end=/]/ contains=TOP
-syn region    jsCaterwaulUnwindProtect  matchgroup=jsCaterwaulMacro start=/unwind_protect\s*\[/  end=/]/ contains=TOP
-
-syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/            end=/]/ contains=TOP
+syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/ end=/]/ contains=TOP
   syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlParens,jsCaterwaulHtmlArray
   syn cluster jsCaterwaulHtmlOps             add=jsCaterwaulHtmlElement,jsCaterwaulHtml
 
@@ -103,19 +80,22 @@ syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\
   syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
   syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption canvas audio video     contained containedin=@jsCaterwaulHtmlOps nextgroup=@jsCaterwaulHtmlOps
 
-syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/            end=/]/ contains=TOP
-  syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/         end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
+syn region    jsCaterwaulSeq            matchgroup=jsCaterwaulMacro start=/seq\s*\[/    end=/]/ contains=TOP
+  syn region  jsCaterwaulSeqSX          matchgroup=jsCaterwaulMacro start=/s[kvp]\s*\[/ end=/]/ contains=TOP contained containedin=jsCaterwaulSeq
   syn match   jsCaterwaulSeqVariableOp  /\([-\*/%|&]!\?\|<<\|>>\|>>>\)\~\?\k*/ contained contains=jsCaterwaulSeqVariable,jsOperator containedin=jsCaterwaulSeq
     syn match jsCaterwaulSeqVariable    /\k\+/ contained containedin=jsCaterwaulSeqVariableOp
 
 syn match     jsCaterwaulDefsubstVar    /_\k\+/ contained containedin=jsCaterwaulDefsubst
 
 syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[A-Za-z0-9$_()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
-syn match     jsCaterwaulOperatorFn     /\$[-+*/^%&\|<>]\{1,2\}\$/
-syn match     jsCaterwaulUnaryLeftOp    /[^'"/ ]\+[<>=]\{2,3\}/
 
 syn match     jsParens                  /[()]/ contained
 syn match     jsClosers                 /[\]})]/
+
+syn region    jsBlockComment            start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
+syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,jsCommentTags
+
+  syn keyword jsCommentTags             TODO FIXME XXX TBD contained
 
 syn sync fromstart
 syn sync maxlines=100
@@ -138,22 +118,19 @@ hi def link jsCaterwaulHtmlAttr         Special
 
 hi def link jsCaterwaulSeqVariable      Identifier
 
-hi def link jsCaterwaulMb               Special
-
-hi def link jsCpsBindingAssignment      Identifier
-hi def link jsCaterwaulContinuation     Special
-
 hi def link jsCaterwaulUnaryLeftOp      Special
 hi def link jsCaterwaulComplexOp        Special
 hi def link jsCaterwaulOperatorFn       Special
 
-hi def link jsCaterwaulDefmacro         Special
-hi def link jsCaterwaulWithGensyms      Identifier
-hi def link jsCaterwaulDefsubstVar      Identifier
-
-hi def link jsCaterwaulQs               Special
 hi def link jsCaterwaulMacro            Special
 hi def link jsCaterwaulFn               Identifier
+
+hi def link jsBindingMacro              Special
+hi def link jsFunctionMacro             Special
+hi def link jsOtherMacro                Special
+hi def link jsQuotationMacro            Keyword
+
+hi def link jsQuotationGroup            String
 
 hi def link jsCaterwaul                 Type
 
