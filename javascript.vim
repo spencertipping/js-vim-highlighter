@@ -19,13 +19,26 @@ syn region    jsParenGroup              matchgroup=jsParen   start=/(/  end=/)/ 
 syn region    jsBracketGroup            matchgroup=jsBracket start=/\[/ end=/\]/ contains=TOP
 syn region    jsBraceGroup              matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
 
-syn match     jsAssignment              /\k\+\s*[-+*/^&|%<>]*=[^=]/ contains=jsOperator
+syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
+syn match     jsOperator                /[-+*^%&\|!~;=><,.]\{1,4\}/
+
+syn keyword   jsReservedToplevel        if else switch while for do break continue return with case default try catch finally throw delete void
+syn keyword   jsOperator                in instanceof typeof new
+syn keyword   jsBuiltinType             Array Boolean Date Function Number Object String RegExp
+syn keyword   jsBuiltinLiteral          true false null undefined
+
+syn keyword   jsBuiltinValue            this arguments
+syn keyword   jsPrototype               prototype constructor
+
+syn match     jsAssignment              /\k\+\s*[-+*/^&|%<>]*=[^=]\@=/ contains=jsOperator
+
+syn match     jsWordPrefix              /[-\/|,]\k\@=/
 
 syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
 syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ oneline contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ oneline contains=jsStringEscape,jsCaterwaulEscape
-syn region    jsRegexp                  matchgroup=jsQuote start=+[-=([{!+*%<>=]\@<=\s*/[^/ ]+ms=e-1,rs=e-1 start=+^\s*/[^\/]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*+ oneline contains=jsStringEscape
+syn region    jsRegexp                  matchgroup=jsQuote start=+[-=([{!+*%&|^<>=]\@<=\s*/[^/ ]+ms=e-1,rs=e-1 start=+^\s*/[^\/]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*+ oneline contains=jsStringEscape
 
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
   syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
@@ -39,26 +52,18 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
 
   syn keyword jsVarBindingKeyword       const var contained
   syn keyword jsBindingKeyword          function catch contained
-  syn match   jsBindingAssignment       /\k\+\s*=\([^=]\|$\)/ contains=jsOperator contained containedin=jsVarBinding
+  syn match   jsBindingAssignment       /\k\+\s*=\([^=]\|$\)\@=/ contains=jsOperator contained containedin=jsVarBinding
   syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_, ]*)\)*\s*=\([^=]\|$\)/ contains=jsOperator,jsParens contained containedin=jsBindingGroup
   syn match   jsCpsBindingAssignment    /[A-Za-z0-9$_ ]\+\s*<-/                                  contains=jsOperator,jsParens contained containedin=jsCaterwaulLetCps
 
-syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
-syn match     jsOperator                /[-+*^%&\|!~;=><,.]\{1,4\}/
-
-syn keyword   jsReservedToplevel        if else switch while for do break continue return with case default try catch finally throw delete void
-syn keyword   jsOperator                in instanceof typeof new
-syn keyword   jsBuiltinType             Array Boolean Date Function Number Object String RegExp
-syn keyword   jsBuiltinLiteral          true false null undefined
-
-syn keyword   jsBuiltinValue            this arguments
-syn keyword   jsPrototype               prototype constructor
 syn keyword   jsCaterwaul               caterwaul
 
 syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
 syn keyword   jsOtherMacro              se effect re returning then until over over_keys over_values
+
+syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
 syn region    jsBindingGroup            matchgroup=jsCaterwaulMacro start='\[' end=']' contained contains=TOP
 syn region    jsFunctionGroup           matchgroup=jsCaterwaulMacro start='\[' end=']' contained
@@ -125,10 +130,14 @@ hi def link jsCaterwaulOperatorFn       Special
 hi def link jsCaterwaulMacro            Special
 hi def link jsCaterwaulFn               Identifier
 
+hi def link jsWordPrefix                Special
+
 hi def link jsBindingMacro              Special
 hi def link jsFunctionMacro             Special
 hi def link jsOtherMacro                Special
 hi def link jsQuotationMacro            Keyword
+
+hi def link jsFunctionGroup             Identifier
 
 hi def link jsQuotationGroup            String
 
