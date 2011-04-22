@@ -61,13 +61,16 @@ syn keyword   jsCaterwaul               caterwaul
 syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
-syn keyword   jsOtherMacro              se effect re returning then until over over_keys over_values
+syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly
 
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
-syn region    jsBindingGroup            matchgroup=jsCaterwaulMacro start='\[' end=']' contained contains=TOP
-syn region    jsFunctionGroup           matchgroup=jsCaterwaulMacro start='\[' end=']' contained
-syn region    jsQuotationGroup          matchgroup=jsCaterwaulMacro start='\[' end=']' contained contains=TOP
+syn region    jsBindingGroup            matchgroup=jsCaterwaulMacro start='\s*\[' end=']' contained contains=TOP
+syn region    jsFunctionGroup           matchgroup=jsCaterwaulMacro start='\s*\[' end=']' contained
+syn region    jsQuotationGroup          matchgroup=jsCaterwaulMacro start='\s*\[' end=']' contained contains=TOP
+
+syn match     jsBindingGroup            /\.\k\+/ contained
+syn match     jsFunctionGroup           /\.\k\+/ contained
 
 syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/html\s*\[/ end=/]/ contains=TOP
   syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlParens,jsCaterwaulHtmlArray
