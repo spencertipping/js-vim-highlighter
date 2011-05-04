@@ -56,8 +56,6 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
   syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_, ]*)\)*\s*=\([^=]\|$\)/ contains=jsOperator,jsParens contained containedin=jsBindingGroup
   syn match   jsCpsBindingAssignment    /[A-Za-z0-9$_ ]\+\s*<-/                                  contains=jsOperator,jsParens contained containedin=jsCaterwaulLetCps
 
-syn keyword   jsCaterwaul               caterwaul
-
 syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
@@ -143,8 +141,6 @@ hi def link jsQuotationMacro            Keyword
 hi def link jsFunctionGroup             Identifier
 
 hi def link jsQuotationGroup            String
-
-hi def link jsCaterwaul                 Type
 
 hi def link jsLineComment               Comment
 hi def link jsBlockComment              Comment
