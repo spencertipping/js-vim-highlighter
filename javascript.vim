@@ -58,7 +58,6 @@ syn keyword   jsBuiltinLiteral          true false null undefined
 
 syn keyword   jsBuiltinValue            this arguments
 syn keyword   jsPrototype               prototype constructor
-syn keyword   jsCaterwaul               caterwaul
 
 syn region    jsCaterwaulPEG            matchgroup=jsCaterwaulMacro start=+peg\[+ end=/]/ contains=TOP
 syn region    jsCaterwaulContinuation   matchgroup=jsCaterwaulMacro start=+call/\(cc\|tail\)\s*\[+ end=/]/ contains=TOP
@@ -154,8 +153,6 @@ hi def link jsCaterwaulDefsubstVar      Identifier
 hi def link jsCaterwaulQs               Special
 hi def link jsCaterwaulMacro            Special
 hi def link jsCaterwaulFn               Identifier
-
-hi def link jsCaterwaul                 Type
 
 hi def link jsLineComment               Comment
 hi def link jsBlockComment              Comment
