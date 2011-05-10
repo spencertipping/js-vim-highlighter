@@ -20,7 +20,8 @@ syn region    jsBracketGroup            matchgroup=jsBracket start=/\[/ end=/\]/
 syn region    jsBraceGroup              matchgroup=jsBrace   start=/{/  end=/}/  contains=TOP
 
 syn region    jsTernary                 matchgroup=jsTernaryOperator start=/?/ end=/:/ contains=TOP,jsColonLHS
-syn match     jsOperator                /[-+*^%&\|!~;=><,.]\{1,4\}/
+syn match     jsOperator                /[-+*^%&\|!~;=><,]\{1,4\}/
+syn match     jsDot                     /\./
 
 syn keyword   jsReservedToplevel        if else switch while for do break continue return with case default try catch finally throw delete void
 syn keyword   jsOperator                in instanceof typeof new
@@ -36,12 +37,12 @@ syn match     jsWordPrefix              /[-\/|,]\k\@=/
 
 syn match     jsIdentifier              /[A-Za-z$_][A-Za-z0-9$_]*/
 syn match     jsNumber                  /-\?0x[0-9A-Fa-f]\+\|-\?\(\d*\.\d\+\|\d\+\.\d*\|\d\+\)\([eE][+-]\?\d\{1,3\}\)\?\|-\?0[0-7]\+/
-syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ oneline contains=jsStringEscape,jsCaterwaulEscape
-syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ oneline contains=jsStringEscape,jsCaterwaulEscape
+syn region    jsStringD                 matchgroup=jsQuote start=/"/ skip=/\\\\\|\\"/ end=/"/ oneline keepend contains=jsStringEscape,jsCaterwaulEscape
+syn region    jsStringS                 matchgroup=jsQuote start=/'/ skip=/\\\\\|\\'/ end=/'/ oneline keepend contains=jsStringEscape,jsCaterwaulEscape
 syn region    jsRegexp                  matchgroup=jsQuote start=+/[^/ ]+rs=e-1 skip=+\\\\\|\\/+ end=+/[gims]*\W\@=+ oneline contains=jsStringEscape
 
   syn match   jsStringEscape            /\\\d\{3\}\|\\u[0-9A-Za-z]\{4\}\|\\[a-z"'\\]/ contained
-  syn match   jsCaterwaulEscape         /#{[^}]\+}/ contains=TOP
+  syn region  jsCaterwaulEscape         start=/#{/ end=/}/                            contained contains=TOP keepend
   syn match   jsCaterwaulNumericHex     /xl\?\(_\?[0-9a-f]\{2\}_\?\)\+/
   syn match   jsCaterwaulNumericBinary  /bl\?\(_\?[01]\{2\}_\?\)\{4,\}/
 
@@ -53,13 +54,13 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
   syn keyword jsVarBindingKeyword       const var contained
   syn keyword jsBindingKeyword          function catch contained
   syn match   jsBindingAssignment       /\k\+\s*=\([^=]\|$\)\@=/ contains=jsOperator contained containedin=jsVarBinding
-  syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_,= ]*)\)*\s*=\([^=]\|$\)/ contains=jsOperator,jsParens contained containedin=jsBindingGroup
-  syn match   jsCpsBindingAssignment    /[A-Za-z0-9$_ ]\+\s*<-/                                   contains=jsOperator,jsParens contained containedin=jsCaterwaulLetCps
+  syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_,= ]*)\)*\s*=\([^=]\|$\)\@=/ contains=jsOperator,jsParens contained containedin=jsBindingGroup
+  syn match   jsCpsBindingAssignment    /[A-Za-z0-9$_ ]\+\s*<-/                                      contains=jsOperator,jsParens contained containedin=jsCaterwaulLetCps
 
 syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
-syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck safely failover jquery seq
+syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck safely failover seq
 
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
@@ -70,27 +71,31 @@ syn region    jsQuotationGroup          matchgroup=jsCaterwaulMacro start='\s*\[
 syn match     jsBindingGroup            /\.\k\+/ contained
 syn match     jsFunctionGroup           /\.\k\+/ contained
 
-syn region    jsCaterwaulHtml           matchgroup=jsCaterwaulMacro start=/\<jquery\s*\[/ end=/]/ contains=@jsCaterwaulHtmlOps
+syn match     jsParens                  /[()]/ contained
+syn match     jsClosers                 /[\]})]/
 
-  syn cluster jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlParens,jsCaterwaulHtmlArray
-  syn cluster jsCaterwaulHtmlOps             add=jsCaterwaulHtmlElement,jsCaterwaulHtml,jsStringD,jsStringS
+syn cluster   jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlElement,jsCaterwaulHtmlParens
+syn cluster   jsCaterwaulHtmlOps             add=jsCaterwaulHtmlArray
+
+syn region    jsCaterwaulHtmlPrefix1    matchgroup=jsCaterwaulMacro start=/\<jquery\s*\[/ end=/]/ contains=TOP,@jsCaterwaulHtmlGroups
+syn match     jsCaterwaulHtmlPrefix2    /\<jquery\s\+in\s*/ nextgroup=@jsCaterwaulHtmlOps
+
+syn cluster   jsCaterwaulHtmlGroups     contains=jsCaterwaulHtmlPrefix1,jsCaterwaulHtmlPrefix2
 
   syn match   jsCaterwaulHtmlClass      /[ \t\n]*\./                    contained nextgroup=jsCaterwaulHtmlClassName
   syn match   jsCaterwaulHtmlClassName  /[ \t\n]*\w\+/                  contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlSlash      /[ \t\n]*\/\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlAttr       /[ \t\n]*\*\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlMap        /[ \t\n]*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
-  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/  end=/)/ nextgroup=@jsCaterwaulHtmlOps contains=@jsCaterwaulHtmlOps contained containedin=@jsCaterwaulHtmlOps
-  syn region  jsCaterwaulHtmlArray      matchgroup=jsParens start=/\[/ end=/]/ nextgroup=@jsCaterwaulHtmlOps contains=TOP                 contained containedin=@jsCaterwaulHtmlOps
 
-  syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=jsCaterwaulHtml nextgroup=@jsCaterwaulHtmlOps
-  syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=jsCaterwaulHtml nextgroup=@jsCaterwaulHtmlOps
-  syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption canvas audio video     contained containedin=jsCaterwaulHtml nextgroup=@jsCaterwaulHtmlOps
+  syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/  end=/)/ contained nextgroup=@jsCaterwaulHtmlOps containedin=@jsCaterwaulHtmlGroups contains=jsCaterwaulHtmlElement
+  syn region  jsCaterwaulHtmlArray      matchgroup=jsParens start=/\[/ end=/]/ contained nextgroup=@jsCaterwaulHtmlOps containedin=@jsCaterwaulHtmlGroups contains=TOP
+
+  syn keyword jsCaterwaulHtmlElement    html head body meta script style link title div a span input button textarea option contained containedin=@jsCaterwaulHtmlGroups nextgroup=@jsCaterwaulHtmlOps
+  syn keyword jsCaterwaulHtmlElement    table tbody tr td th thead tfoot img h1 h2 h3 h4 h5 h6 li ol ul noscript p pre samp contained containedin=@jsCaterwaulHtmlGroups nextgroup=@jsCaterwaulHtmlOps
+  syn keyword jsCaterwaulHtmlElement    blockquote select form label iframe sub sup var code caption canvas audio video     contained containedin=@jsCaterwaulHtmlGroups nextgroup=@jsCaterwaulHtmlOps
 
 syn match     jsCaterwaulComplexOp      /\([-+*^%&\|<>]\{1,2\}\)[A-Za-z0-9$_()\[\]]\+\1\|\([<>]\{1,2\}\)[^ ]\+[<>]\{1,2\}/
-
-syn match     jsParens                  /[()]/ contained
-syn match     jsClosers                 /[\]})]/
 
 syn region    jsBlockComment            start=+/\*+ end=+\*/+ contains=@Spell,jsCommentTags
 syn region    jsLineComment             start=+//+  end=+$+   contains=@Spell,jsCommentTags
@@ -114,6 +119,8 @@ hi def link jsCaterwaulHtmlClassName    Type
 hi def link jsCaterwaulHtmlSlash        Special
 hi def link jsCaterwaulHtmlMap          Special
 hi def link jsCaterwaulHtmlAttr         Special
+
+hi def link jsCaterwaulHtmlPrefix2      Special
 
 hi def link jsCaterwaulSeqVariable      Identifier
 
@@ -172,6 +179,7 @@ hi def link jsParamBinding              Identifier
 
 hi def link jsReservedToplevel          Keyword
 hi def link jsOperator                  Keyword
+hi def link jsDot                       Special
 hi def link jsBuiltinType               Type
 hi def link jsBuiltinLiteral            Special
 hi def link jsBuiltinValue              Special
