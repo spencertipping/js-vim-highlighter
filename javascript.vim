@@ -85,7 +85,9 @@ syn cluster   jsCaterwaulHtmlGroups     contains=jsCaterwaulHtmlPrefix1,jsCaterw
   syn match   jsCaterwaulHtmlClass      /[ \t\n]*\./                    contained nextgroup=jsCaterwaulHtmlClassName
   syn match   jsCaterwaulHtmlClassName  /[ \t\n]*\w\+/                  contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlSlash      /[ \t\n]*\/\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlSlashB     /[ \t\n]*\/!\s*\w\+/            contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlAttr       /[ \t\n]*\*\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlAttrB      /[ \t\n]*\*!\s*\w\+/            contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlMap        /[ \t\n]*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
 
   syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/  end=/)/ contained nextgroup=@jsCaterwaulHtmlOps containedin=@jsCaterwaulHtmlGroups contains=jsCaterwaulHtmlElement,jsStringS,jsStringD
@@ -117,8 +119,10 @@ hi def link jsCaterwaulHtmlElement      Keyword
 hi def link jsCaterwaulHtmlClass        Special
 hi def link jsCaterwaulHtmlClassName    Type
 hi def link jsCaterwaulHtmlSlash        Special
+hi def link jsCaterwaulHtmlSlashB       Special
 hi def link jsCaterwaulHtmlMap          Special
 hi def link jsCaterwaulHtmlAttr         Special
+hi def link jsCaterwaulHtmlAttrB        Special
 
 hi def link jsCaterwaulHtmlPrefix2      Special
 
