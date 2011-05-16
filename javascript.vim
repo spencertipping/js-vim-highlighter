@@ -75,7 +75,7 @@ syn match     jsParens                  /[()]/ contained
 syn match     jsClosers                 /[\]})]/
 
 syn cluster   jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlElement,jsCaterwaulHtmlParens
-syn cluster   jsCaterwaulHtmlOps             add=jsCaterwaulHtmlArray
+syn cluster   jsCaterwaulHtmlOps             add=jsCaterwaulHtmlArray,jsCaterwaulHtmlSlashB,jsCaterwaulHtmlAttrB
 
 syn region    jsCaterwaulHtmlPrefix1    matchgroup=jsCaterwaulMacro start=/\<jquery\s*\[/ end=/]/ contains=TOP,@jsCaterwaulHtmlGroups
 syn match     jsCaterwaulHtmlPrefix2    /\<jquery\s\+in\s*/ nextgroup=@jsCaterwaulHtmlOps
