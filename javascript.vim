@@ -61,6 +61,7 @@ syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGr
 syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
 syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck safely failover seq object pairs keys values overload
+syn keyword   jsOtherMacro              noexpand reexpand
 
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
