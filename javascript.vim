@@ -60,7 +60,7 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
 syn keyword   jsBindingMacro            bind where         nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven fn fb nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse             nextgroup=jsQuotationGroup
-syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck safely failover seq object keys values
+syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck safely failover seq object pairs keys values
 
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
