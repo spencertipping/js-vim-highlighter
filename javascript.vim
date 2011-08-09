@@ -61,10 +61,14 @@ syn keyword   jsBindingMacro            bind where   nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse       nextgroup=jsQuotationGroup
 syn keyword   jsFunctionMacro           delay lazy
-syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck raise safely failover rescue seq object pairs keys values overload
+syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck raise safely failover rescue seq overload
 syn keyword   jsOtherMacro              noexpand reexpand
 
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
+
+syn match     jsSeqFilter               /\/\(pairs\|keys\|values\)\>/
+syn match     jsSeqFilter               /%[kv][\*%\/]/
+syn match     jsSeqFilter               /[-\/|]object\>/
 
 syn region    jsBindingGroup            matchgroup=jsCaterwaulMacro start='\s*\[' end=']' contained contains=TOP
 syn region    jsFunctionGroup           matchgroup=jsCaterwaulMacro start='\s*\[' end=']' contained
@@ -136,6 +140,8 @@ hi def link jsCaterwaulOperatorFn       Special
 
 hi def link jsCaterwaulMacro            Special
 hi def link jsCaterwaulFn               Identifier
+
+hi def link jsSeqFilter                 Special
 
 hi def link jsWordPrefix                Special
 
