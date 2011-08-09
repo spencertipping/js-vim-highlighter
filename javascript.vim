@@ -81,7 +81,7 @@ syn match     jsParens                  /[()]/ contained
 syn match     jsClosers                 /[\]})]/
 
 syn cluster   jsCaterwaulHtmlOps        contains=jsCaterwaulHtmlClass,jsCaterwaulHtmlSlash,jsCaterwaulHtmlMap,jsCaterwaulHtmlAttr,jsCaterwaulHtmlElement,jsCaterwaulHtmlParens
-syn cluster   jsCaterwaulHtmlOps             add=jsCaterwaulHtmlArray,jsCaterwaulHtmlSlashB,jsCaterwaulHtmlAttrB
+syn cluster   jsCaterwaulHtmlOps             add=jsCaterwaulHtmlArray,jsCaterwaulHtmlSlashB,jsCaterwaulHtmlAttrB,jsCaterwaulHtmlPlus,jsCaterwaulHtmlContains
 
 syn region    jsCaterwaulHtmlPrefix1    matchgroup=jsCaterwaulMacro start=/\<jquery\s*\[/ end=/]/ contains=TOP,@jsCaterwaulHtmlGroups
 syn match     jsCaterwaulHtmlPrefix2    /\<jquery\s\+in\s*/ nextgroup=@jsCaterwaulHtmlOps
@@ -95,6 +95,9 @@ syn cluster   jsCaterwaulHtmlGroups     contains=jsCaterwaulHtmlPrefix1,jsCaterw
   syn match   jsCaterwaulHtmlAttr       /[ \t\n]*\*\s*\w\+/             contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlAttrB      /[ \t\n]*\*!\s*\w\+/            contained nextgroup=@jsCaterwaulHtmlOps
   syn match   jsCaterwaulHtmlMap        /[ \t\n]*%\s*[A-Za-z0-9$_\.]\+/ contained nextgroup=@jsCaterwaulHtmlOps
+
+  syn match   jsCaterwaulHtmlPlus       /[ \t\n]*+\s*/                  contained nextgroup=@jsCaterwaulHtmlOps
+  syn match   jsCaterwaulHtmlContains   /[ \t\n]*>\s*/                  contained nextgroup=@jsCaterwaulHtmlOps
 
   syn region  jsCaterwaulHtmlParens     matchgroup=jsParens start=/(/  end=/)/ contained nextgroup=@jsCaterwaulHtmlOps containedin=@jsCaterwaulHtmlGroups contains=jsCaterwaulHtmlElement,jsStringS,jsStringD
   syn region  jsCaterwaulHtmlArray      matchgroup=jsParens start=/\[/ end=/]/ contained nextgroup=@jsCaterwaulHtmlOps containedin=@jsCaterwaulHtmlGroups contains=TOP
@@ -129,6 +132,8 @@ hi def link jsCaterwaulHtmlSlashB       Special
 hi def link jsCaterwaulHtmlMap          Special
 hi def link jsCaterwaulHtmlAttr         Special
 hi def link jsCaterwaulHtmlAttrB        Special
+hi def link jsCaterwaulHtmlPlus         Special
+hi def link jsCaterwaulHtmlContains     Special
 
 hi def link jsCaterwaulHtmlPrefix2      Special
 
