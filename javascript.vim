@@ -67,7 +67,7 @@ syn keyword   jsOtherMacro              noexpand reexpand
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
 syn match     jsSeqFilter               /\/\(pairs\|keys\|values\)\>/
-syn match     jsSeqFilter               /%[kv][\*%\/]/
+syn match     jsSeqFilter               /%[kv][\*%\/~!]/
 syn match     jsSeqFilter               /[-\/|]object\>/
 
 syn region    jsBindingGroup            matchgroup=jsCaterwaulMacro start='\s*\[' end=']' contained contains=TOP
