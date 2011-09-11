@@ -57,12 +57,11 @@ syn region    jsParamBinding            matchgroup=jsBindingConstruct start=/\(f
   syn match   jsExtraBindingAssignment  /[A-Za-z0-9$_ ]\+\(([A-Za-z0-9$_,= ]*)\)*\s*=\([^=]\|$\)\@=/ contains=jsOperator,jsParens contained containedin=jsBindingGroup
   syn match   jsCpsBindingAssignment    /[A-Za-z0-9$_ ]\+\s*<-/                                      contains=jsOperator,jsParens contained containedin=jsCaterwaulLetCps
 
-syn keyword   jsBindingMacro            bind where   nextgroup=jsBindingGroup
+syn keyword   jsBindingMacro            where        nextgroup=jsBindingGroup
 syn keyword   jsFunctionMacro           given bgiven nextgroup=jsFunctionGroup
 syn keyword   jsQuotationMacro          qs qse       nextgroup=jsQuotationGroup
 syn keyword   jsFunctionMacro           delay lazy
-syn keyword   jsOtherMacro              se effect re returning then when unless until over over_keys over_values wobbly chuck raise safely failover rescue seq overload
-syn keyword   jsOtherMacro              noexpand reexpand
+syn keyword   jsOtherMacro              se re when unless until raise rescue seq noexpand reexpand
 
 syn cluster   jsMacro                   add=jsBindingMacro,jsFunctionMacro,jsQuotationMacro,jsOtherMacro
 
